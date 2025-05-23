@@ -6,15 +6,6 @@
     <title>Operation Paperclip: An Interactive Exploration</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Visualization & Content Choices:
-        - Report Info: ~1500 scientists. Goal: Inform. Viz: Prominent Text Stat. Interaction: Static display. Justification: Key quantitative fact. Library: HTML/CSS.
-        - Report Info: Program phases. Goal: Organize/Inform. Viz: Horizontal Timeline. Interaction: Click milestone for text. Justification: Visualizes progression. Library: HTML/CSS/JS.
-        - Report Info: Wernher von Braun. Goal: Inform/Engage. Viz: Profile Card + Modal. Interaction: Click card for modal. Justification: Highlights key figure. Library: HTML/CSS/JS.
-        - Report Info: Areas of contribution. Goal: Inform/Compare. Viz: Donut Chart (Chart.js). Interaction: Static display with tooltips. Justification: Visualizes distribution of impact. Library: Chart.js.
-        - Report Info: Ethical arguments. Goal: Explore/Compare. Viz: Clickable Argument Boxes. Interaction: Click to expand. Justification: Presents differing viewpoints interactively. Library: HTML/CSS/JS.
-        - Report Info: Contributions categories. Goal: Organize/Inform. Viz: Tabbed Content. Interaction: Click tab to switch content. Justification: Organizes diverse information concisely. Library: HTML/CSS/JS.
-        - Report Info: User-defined ethical dilemmas. Goal: Explore/Synthesize/Engage. Viz: Text input, AI-generated text response. Interaction: User types question, clicks button, AI provides analysis. Justification: Deepens critical thinking on ethical themes using LLM. Library: Gemini API (gemini-2.0-flash).
-        CONFIRMING NO SVG/Mermaid, supporting the designed structure. -->
     <style>
         body { font-family: 'Inter', sans-serif; }
         .timeline-item-content { display: none; }
@@ -61,7 +52,7 @@
             <h2 class="text-3xl font-semibold text-teal-600 mb-6 text-center">What Was Operation Paperclip?</h2>
             <div class="bg-white p-6 rounded-lg shadow-lg mb-8">
                 <p class="text-lg text-gray-700 leading-relaxed mb-4">
-                    In summary, <span class="text-teal-700">Operation Paperclip</span> involved the secret relocation of approximately <strong class="text-amber-600 text-xl">1,600</strong> German and Austrian scientists, engineers, and technicians with their families to the United States from 1945 and 1959. These weren't just random professionals; many of them had been involved in the Nazi regime's research and development.
+                    In summary, <span class="text-teal-700">Operation Paperclip</span> involved the secret relocation of approximately <strong class="text-amber-600 text-xl">1,600</strong> German and Austrian scientists, engineers, and technicians with their families to the United States from 1945 and 1959. [cite: 2] These weren't just random professionals; many of them had been involved in the Nazi regime's research and development.
                 </p>
             </div>
 
@@ -123,7 +114,7 @@
                     During World War II, he was the <strong class="text-teal-600">technical director of the Peenemünde Army Research Center</strong>, where the infamous <span class="text-amber-600">V-2 ballistic missile</span> was developed. The V-2 was used to attack Allied cities, and its production involved <strong class="text-red-600">slave labor from concentration camps</strong>. This past is what makes his legacy <span class="text-red-600">controversial</span>.
                 </p>
                 <p class="mb-3">
-                    After the war, von Braun and his team were brought to the U.S. under <strong class="text-teal-600">Operation Paperclip</strong>. He quickly became a <span class="text-amber-600">crucial figure in the U.S. Army's rocket program</span>, leading efforts that led to America's entry into space. Later, he transitioned to <strong class="text-teal-600">NASA</strong>, serving as the director of the Marshall Space Flight Center. In this role, he was the <span class="text-amber-600">chief architect of the Saturn V launch vehicle</span>, a super booster that propelled the Apollo spacecraft to the Moon.
+                    After the war, von Braun and his team were brought to the U.S. under <strong class="text-teal-600">Operation Paperclip</strong>. He quickly became a <span class="text-amber-600">crucial figure in the U.S. Army's rocket program</span>, leading efforts that led to America's entry into space. Later, he transitioned to <strong class="text-teal-600">NASA</strong>, serving as the director of the Marshall Space Flight Center. In this role, he was the <span class="text-amber-600">chief architect of the Saturn V launch vehicle</span>[cite: 4], a super booster that propelled the Apollo spacecraft to the Moon.
                 </p>
             </div>
         </section>
@@ -147,7 +138,7 @@
             <h2 class="text-3xl font-semibold text-teal-600 mb-6 text-center">The Ethical Issues</h2>
             <div class="bg-white p-6 rounded-lg shadow-lg mb-8">
                 <p class="text-lg text-gray-700 leading-relaxed mb-4">
-                    Operation Paperclip is not all sunshine and rainbows. Many of the recruited professionals had been previous Nazi’s, and some were accused of involvement in war crimes, like the use of slave labor in rocket production. U.S. officials often "whitewashed" (concealing unpleasant facts about someone or something) or overlooked their pasts to get their hands on the expertise. This section explores the ethical questions raised by the program.
+                    Operation Paperclip is not all sunshine and rainbows. Many of the recruited professionals had been previous Nazi’s, and some were accused of involvement in war crimes, like the use of slave labor in rocket production. [cite: 6] U.S. officials often "whitewashed" (concealing unpleasant facts about someone or something) or overlooked their pasts to get their hands on the expertise. This section explores the ethical questions raised by the program.
                 </p>
             </div>
             <div class="grid md:grid-cols-2 gap-6">
@@ -208,13 +199,13 @@
             <h2 class="text-3xl font-semibold text-teal-600 mb-6 text-center">Works Cited</h2>
             <div class="bg-white p-6 rounded-lg shadow-lg">
                 <p class="text-lg text-gray-700 leading-relaxed mb-4">
-                    Please note: The content in this interactive exploration was generated based on general historical knowledge. For academic or research purposes, you will need to consult and cite specific historical sources on Operation Paperclip.
+                    The content in this interactive exploration was informed by various historical sources.
                 </p>
                 <ul class="list-disc list-inside space-y-2 text-gray-700">
-                    <li>[Insert your first source here in MLA format]</li>
-                    <li>[Insert your second source here in MLA format]</li>
-                    <li>[Insert your third source here in MLA format]</li>
-                    </ul>
+                    <li>"'Operation Paperclip': How Nazi scientists laid the foundation for..." *Business Today*, 11 Oct. 2024, www.businesstoday.in/science/story/operation-paperclip-how-nazi-scientists-laid-the-foundation-for-nasa-449601-2024-10-11.</li>
+                    <li>"Operation Paperclip." *Wikipedia*, Wikimedia Foundation, 23 May 2025, en.wikipedia.org/wiki/Operation_Paperclip.</li>
+                    <li>"Wernher von Braun and the Nazis." *American Experience*, PBS, 23 May 2025, www.pbs.org/wgbh/americanexperience/features/chasing-moon-wernher-von-braun-and-nazis/.</li>
+                </ul>
             </div>
         </section>
 
@@ -309,7 +300,7 @@ Ethical Scenario: "${userDilemma}"
 Discuss the complexities, potential arguments for and against, and avoid taking a definitive stance.`;
                     chatHistory.push({ role: "user", parts: [{ text: prompt }] });
                     const payload = { contents: chatHistory };
-                    const apiKey = "";
+                    const apiKey = "AIzaSyDa8_TTADR1sFTbRo_aWPiWnQHnXVmNbuE"; // Your API Key
                     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                     const response = await fetch(apiUrl, {

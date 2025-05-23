@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operation Paperclip: An Interactive Exploration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Visualization & Content Choices:
+        - Report Info: ~1500 scientists. Goal: Inform. Viz: Prominent Text Stat. Interaction: Static display. Justification: Key quantitative fact. Library: HTML/CSS.
+        - Report Info: Program phases. Goal: Organize/Inform. Viz: Horizontal Timeline. Interaction: Click milestone for text. Justification: Visualizes progression. Library: HTML/CSS/JS.
+        - Report Info: Wernher von Braun. Goal: Inform/Engage. Viz: Profile Card + Modal. Interaction: Click card for modal. Justification: Highlights key figure. Library: HTML/CSS/JS.
+        - Report Info: Areas of contribution. Goal: Inform/Compare. Viz: Donut Chart (Chart.js). Interaction: Static display with tooltips. Justification: Visualizes distribution of impact. Library: Chart.js.
+        - Report Info: Ethical arguments. Goal: Explore/Compare. Viz: Clickable Argument Boxes. Interaction: Click to expand. Justification: Presents differing viewpoints interactively. Library: HTML/CSS/JS.
+        - Report Info: Contributions categories. Goal: Organize/Inform. Viz: Tabbed Content. Interaction: Click tab to switch content. Justification: Organizes diverse information concisely. Library: HTML/CSS/JS.
+        - Report Info: User-defined ethical dilemmas. Goal: Explore/Synthesize/Engage. Viz: Text input, AI-generated text response. Interaction: User types question, clicks button, AI provides analysis. Justification: Deepens critical thinking on ethical themes using LLM. Library: Gemini API (gemini-2.0-flash).
+        CONFIRMING NO SVG/Mermaid, supporting the designed structure. -->
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .timeline-item-content { display: none; }
+        .modal { display: none; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        /* Changed argument-details to always display */
+        .argument-details { display: block; }
+        .chart-container { position: relative; width: 100%; max-width: 400px; margin-left: auto; margin-right: auto; height: 300px; max-height: 350px; }
+        @media (min-width: 768px) { .chart-container { height: 350px; max-height: 400px; } }
+        .nav-link { transition: color 0.3s ease; }
+        .nav-link:hover { color: #0D9488; } /* hover:text-teal-600 */
+        .active-nav-link { color: #0D9488; font-weight: 600; border-bottom: 2px solid #0D9488; }
+    </style>
+</head>
+<body class="bg-stone-100 text-gray-800">
+
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="#" class="text-xl font-semibold text-teal-700">Operation Paperclip</a>
+            <div class="space-x-4">
+                <a href="#intro" class="nav-link text-gray-700">Intro</a>
+                <a href="#what-it-was" class="nav-link text-gray-700">What</a>
+                <a href="#why-it-happened" class="nav-link text-gray-700">Why</a>
+                <a href="#scientists" class="nav-link text-gray-700">Scientists</a>
+                <a href="#contributions" class="nav-link text-gray-700">Contributions</a>
+                <a href="#ethics" class="nav-link text-gray-700">Ethics</a>
+                <a href="#legacy" class="nav-link text-gray-700">Legacy</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-6 py-8">
+
+        <section id="intro" class="mb-16 text-center scroll-mt-20">
+            <h1 class="text-4xl md:text-5xl font-bold text-teal-700 mb-4">Operation Paperclip</h1>
+            <p class="text-lg md:text-xl text-gray-600 mb-6 max-w-3xl mx-auto">A Secret History of Science, Espionage, and Morality</p>
+            <p class="text-md text-gray-700 leading-relaxed max-w-2xl mx-auto">
+                Have you ever wondered about the hidden histories that have shaped the world we live in today? This article will be going over one of these events. After World War II’s end, A new competition began, where it wasn’t just about the physical prowess, but also knowledge. And so, I will be going over how the United States performed a highly secretive program known as <strong>Operation Paperclip</strong>. This program was aimed at providing America with the technological edge in the competition, but it came with many ethical concerns that to this day are debated about.
+            </p>
+        </section>
+
+        <section id="what-it-was" class="mb-16 scroll-mt-20">
+            <h2 class="text-3xl font-semibold text-teal-600 mb-6 text-center">What Was Operation Paperclip?</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg mb-8">
+                <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                    In summary, <span class="text-teal-700">Operation Paperclip</span> involved the secret relocation of approximately <strong class="text-amber-600 text-xl">1,600</strong> German and Austrian scientists, engineers, and technicians with their families to the United States from 1945 and 1959. These weren't just random professionals; many of them had been involved in the Nazi regime's research and development.
+                </p>
+            </div>
+
+            <h3 class="text-2xl font-semibold text-teal-600 mb-4 text-center">Simplified Timeline</h3>
+            <div class="grid md:grid-cols-3 gap-6 text-center">
+                <div class="timeline-item bg-white p-4 rounded-lg shadow hover:shadow-xl transition-shadow duration-300 cursor-pointer" onclick="toggleTimelineItem(this)">
+                    <h4 class="text-xl font-semibold text-teal-700 mb-2">1945: Program Inception</h4>
+                    <p class="text-sm text-gray-500 mb-2">End of WWII. US seeks German scientific expertise.</p>
+                    <div class="timeline-item-content mt-2 text-gray-600 text-sm">
+                        <p>Originally called "Operation Overcast," the program began as Allied forces were sweeping through Germany. The initial aim was to interrogate scientists and exploit their knowledge for the ongoing war against Japan and for post-war military development.</p>
+                    </div>
+                </div>
+                <div class="timeline-item bg-white p-4 rounded-lg shadow hover:shadow-xl transition-shadow duration-300 cursor-pointer" onclick="toggleTimelineItem(this)">
+                    <h4 class="text-xl font-semibold text-teal-700 mb-2">1946: Truman's Directive</h4>
+                    <p class="text-sm text-gray-500 mb-2">Official (but secret) approval with caveats.</p>
+                    <div class="timeline-item-content mt-2 text-gray-600 text-sm">
+                        <p>President Truman officially authorized Project Paperclip but stipulated that individuals with records as "ardent Nazis" or war criminals should be excluded. This directive was often circumvented by intelligence agencies who altered or "bleached" files.</p>
+                    </div>
+                </div>
+                <div class="timeline-item bg-white p-4 rounded-lg shadow hover:shadow-xl transition-shadow duration-300 cursor-pointer" onclick="toggleTimelineItem(this)">
+                    <h4 class="text-xl font-semibold text-teal-700 mb-2">1945-1959: Recruitment & Relocation</h4>
+                    <p class="text-sm text-gray-500 mb-2">Scientists brought to the US.</p>
+                    <div class="timeline-item-content mt-2 text-gray-600 text-sm">
+                        <p>Over this period, scientists and their families were brought to the U.S., often initially under military custody as "War Department Special Employees." They were placed in various military labs, universities, and private companies.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="why-it-happened" class="mb-16 scroll-mt-20">
+            <h2 class="text-3xl font-semibold text-teal-600 mb-6 text-center">Why Did It Happen? The Cold War Context</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                    The primary motivation behind Operation Paperclip was the ongoing Cold War with the Soviet Union. And United States believed that the knowledge that the German experts had was their key to winning for several reasons:
+                </p>
+                <ul class="list-disc list-inside space-y-2 text-gray-700 mb-4">
+                    <li><strong class="text-teal-700">Get a Technological Edge:</strong> To develop advanced weapons, like guided missiles and jet engines and other technologies to stay ahead of the Soviets.</li>
+                    <li><strong class="text-teal-700">Denying knowledge to Soviet Union:</strong> To prevent these scientists from working for the Soviet Union or other nations. There was a real fear that if the United States didn't get them, the Soviets would.</li>
+                </ul>
+                <p class="text-md text-gray-600 leading-relaxed">
+                    In summary, it was a strategic move, where scientific and technological superiority was seen as necessary for national security and global influence. The need to “win” most of the time overshadowed other considerations.
+                </p>
+            </div>
+        </section>
+
+        <section id="scientists" class="mb-16 scroll-mt-20">
+            <h2 class="text-3xl font-semibold text-teal-600 mb-6 text-center">The Scientists: Key Figures & Expertise</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg mb-8">
+                 <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                    While <span class="text-teal-700">Operation Paperclip</span> involved hundreds of specialists, certain <span class="text-amber-600">people became especially well-known</span> for their contributions in the U.S. These scientists brought expertise in a wide range of fields, such as <strong class="text-teal-700">rocketry</strong> and other.
+                </p>
+            </div>
+            <div class="bg-white p-8 rounded-lg shadow-lg max-w-4xl mx-auto text-gray-700 leading-relaxed">
+                <h3 class="text-2xl font-semibold text-teal-700 mb-4 text-center">Wernher von Braun: The Architect of the Space Age</h3>
+                <p class="mb-3">
+                    <strong class="text-teal-600">Wernher von Braun</strong> (1912-1977) was a <span class="text-amber-600">German-American aerospace engineer</span> and one of the most important figures in the development of <strong class="text-teal-600">rocket technology</strong> in Germany and the United States. His career ranged from the Nazi regime's advanced weapons programs to American space exploration.
+                </p>
+                <p class="mb-3">
+                    During World War II, he was the <strong class="text-teal-600">technical director of the Peenemünde Army Research Center</strong>, where the infamous <span class="text-amber-600">V-2 ballistic missile</span> was developed. The V-2 was used to attack Allied cities, and its production involved <strong class="text-red-600">slave labor from concentration camps</strong>. This past is what makes his legacy <span class="text-red-600">controversial</span>.
+                </p>
+                <p class="mb-3">
+                    After the war, von Braun and his team were brought to the U.S. under <strong class="text-teal-600">Operation Paperclip</strong>. He quickly became a <span class="text-amber-600">crucial figure in the U.S. Army's rocket program</span>, leading efforts that led to America's entry into space. Later, he transitioned to <strong class="text-teal-600">NASA</strong>, serving as the director of the Marshall Space Flight Center. In this role, he was the <span class="text-amber-600">chief architect of the Saturn V launch vehicle</span>, a super booster that propelled the Apollo spacecraft to the Moon.
+                </p>
+            </div>
+        </section>
+
+        <section id="contributions" class="mb-16 scroll-mt-20">
+            <h2 class="text-3xl font-semibold text-teal-600 mb-6 text-center">Contributions & Successes</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg mb-8">
+                <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                    The scientists recruited through Operation Paperclip made significant contributions to American science and technology. Their work accelerated U.S. advancements in the space race. This section explores their work.
+                </p>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold text-teal-700 mb-2 text-center">The Race to Space</h3>
+                <p class="text-gray-700 leading-relaxed">
+                    Some of the most significant impacts of Operation Paperclip on the U.S. space program were the development of the rockets that launched America's first satellites and eventually sent astronauts to the Moon with the Apollo program.
+                </p>
+                </div>
+            </section>
+
+        <section id="ethics" class="mb-16 scroll-mt-20">
+            <h2 class="text-3xl font-semibold text-teal-600 mb-6 text-center">The Ethical Issues</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg mb-8">
+                <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                    Operation Paperclip is not all sunshine and rainbows. Many of the recruited professionals had been previous Nazi’s, and some were accused of involvement in war crimes, like the use of slave labor in rocket production. U.S. officials often "whitewashed" (concealing unpleasant facts about someone or something) or overlooked their pasts to get their hands on the expertise. This section explores the ethical questions raised by the program.
+                </p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="argument-box bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-xl font-semibold text-amber-600 mb-2">Arguments for "National Security"</h3>
+                    <div class="argument-details mt-2 text-gray-600 text-sm">
+                        <ul class="list-disc list-inside space-y-1">
+                            <li>The knowledge was vital to U.S. security in the Cold War.</li>
+                            <li>If the U.S. didn't get them, the Soviets would (bad)</li>
+                            <li>Their scientific knowledge outweighed their past in the context of immediate threats.</li>
+                            <li>Many scientists claimed they were not “Nazi” but joined the party for career reasons.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="argument-box bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-xl font-semibold text-amber-600 mb-2">Arguments for "Moral Accountability"</h3>
+                    <div class="argument-details mt-2 text-gray-600 text-sm">
+                        <ul class="list-disc list-inside space-y-1">
+                            <li>It was morally wrong not to punish individuals associated with a regime responsible for atrocities.</li>
+                            <li>Some scientists were directly involved in war crimes or exploitation.</li>
+                            <li>Covering up their pasts was a betrayal of justice and Allied war aims.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-lg mt-12">
+                <h3 class="text-2xl font-semibold text-teal-600 mb-4 text-center">Ethical Dilemma Explorer ✨</h3>
+                <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                    Explore the complexities of Operation Paperclip's ethical challenges. Type a hypothetical ethical scenario related to the program, and our AI will provide a balanced discussion.
+                </p>
+                <textarea id="ethicalDilemmaInput" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 mb-4 h-32 resize-y" placeholder="Example: 'If a scientist's knowledge could save lives but they had a dark past, should they be recruited?'"></textarea>
+                <button id="analyzeDilemmaBtn" class="bg-amber-600 hover:bg-amber-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-300 w-full md:w-auto">Analyze Dilemma ✨</button>
+                <div id="loadingIndicator" class="mt-4 text-center text-gray-500 hidden">
+                    Analyzing dilemma... Please wait.
+                </div>
+                <div id="dilemmaResponse" class="mt-6 p-4 bg-stone-50 rounded-lg border border-gray-200 text-gray-700 leading-relaxed">
+                    Your ethical dilemma analysis will appear here.
+                </div>
+            </div>
+        </section>
+
+        <section id="legacy" class="mb-16 scroll-mt-20">
+            <h2 class="text-3xl font-semibold text-teal-600 mb-6 text-center">Legacy & Reflection</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                    Operation Paperclip left a complex and lasting legacy. For one, it undeniably gave a “boost” to American scientific and technological advancement, particularly in aerospace (rockets). The U.S. space program, a source of national pride and scientific achievement, relied quite heavily on expertise brought over by these German scientists.
+                </p>
+                <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                    On the other hand, the program is a reminder of how ethics are often ignored in the name of “national interest”. The decision to recruit and protect the previously Nazi people from their pasts continues to be a subject in moral debate. It raises questions like about how history should remember such individuals and events.
+                </p>
+                <p class="text-md text-gray-600 font-semibold mt-6 text-center">
+                    What do you think? How should we remember Operation Paperclip and the individuals involved?
+                </p>
+            </div>
+        </section>
+
+        <section id="works-cited" class="mb-16 scroll-mt-20">
+            <h2 class="text-3xl font-semibold text-teal-600 mb-6 text-center">Works Cited</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                    Please note: The content in this interactive exploration was generated based on general historical knowledge. For academic or research purposes, you will need to consult and cite specific historical sources on Operation Paperclip.
+                </p>
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
+                    <li>[Insert your first source here in MLA format]</li>
+                    <li>[Insert your second source here in MLA format]</li>
+                    <li>[Insert your third source here in MLA format]</li>
+                    </ul>
+            </div>
+        </section>
+
+    </div>
+
+    <footer class="bg-gray-800 text-white text-center p-6 mt-12">
+        </footer>
+
+    <script>
+        // Functions moved outside DOMContentLoaded to be globally accessible
+        function toggleTimelineItem(element) {
+            const content = element.querySelector('.timeline-item-content');
+            if (content) {
+                content.style.display = content.style.display === 'none' || content.style.display === '' ? 'block' : 'none';
+            }
+        }
+
+        // Removed toggleArgument function as it's no longer needed for direct display
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Ensure the span with id="currentYear" exists before trying to set its textContent
+            const currentYearSpan = document.getElementById('currentYear');
+            if (currentYearSpan) {
+                currentYearSpan.textContent = new Date().getFullYear();
+            }
+
+
+            const navLinks = document.querySelectorAll('nav a[href^="#"]');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                        updateActiveNavLink(this);
+                    }
+                });
+            });
+
+            const sections = document.querySelectorAll('section');
+            const navLi = document.querySelectorAll('nav a.nav-link');
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 120) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLi.forEach(link => {
+                    link.classList.remove('active-nav-link');
+                    if (link.getAttribute('href').substring(1) === current) {
+                        link.classList.add('active-nav-link');
+                    }
+                });
+                if (pageYOffset < sections[0].offsetTop -120) {
+                     navLi.forEach(link => link.classList.remove('active-nav-link'));
+                     document.querySelector('nav a[href="#intro"]').classList.add('active-nav-link');
+                }
+            });
+            if (window.location.hash) {
+                const initialLink = document.querySelector(`nav a[href="${window.location.hash}"]`);
+                if (initialLink) updateActiveNavLink(initialLink);
+            } else {
+                 document.querySelector('nav a[href="#intro"]').classList.add('active-nav-link');
+            }
+
+            const analyzeDilemmaBtn = document.getElementById('analyzeDilemmaBtn');
+            const ethicalDilemmaInput = document.getElementById('ethicalDilemmaInput');
+            const dilemmaResponse = document.getElementById('dilemmaResponse');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+
+            analyzeDilemmaBtn.addEventListener('click', async () => {
+                const userDilemma = ethicalDilemmaInput.value.trim();
+                if (!userDilemma) {
+                    dilemmaResponse.innerHTML = '<p class="text-red-600">Please enter an ethical dilemma to analyze.</p>';
+                    return;
+                }
+
+                loadingIndicator.classList.remove('hidden');
+                dilemmaResponse.innerHTML = '';
+
+                try {
+                    let chatHistory = [];
+                    const prompt = `You are an AI assistant specialized in historical ethical dilemmas, particularly those related to Operation Paperclip. Provide a balanced, thoughtful, and concise discussion (around 150-250 words) on the following ethical scenario, considering the historical context and the perspectives involved. Make it suitable for middle schoolers and staff.
+
+Ethical Scenario: "${userDilemma}"
+
+Discuss the complexities, potential arguments for and against, and avoid taking a definitive stance.`;
+                    chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                    const payload = { contents: chatHistory };
+                    const apiKey = "";
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    const result = await response.json();
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        const text = result.candidates[0].content.parts[0].text;
+                        dilemmaResponse.innerHTML = `<p>${text}</p>`;
+                    } else {
+                        dilemmaResponse.innerHTML = '<p class="text-red-600">Could not generate a response. Please try again.</p>';
+                    }
+                } catch (error) {
+                    console.error('Error calling Gemini API:', error);
+                    dilemmaResponse.innerHTML = '<p class="text-red-600">An error occurred while analyzing the dilemma. Please try again later.</p>';
+                } finally {
+                    loadingIndicator.classList.add('hidden');
+                }
+            });
+        });
+
+        function updateActiveNavLink(activeLink) {
+            document.querySelectorAll('nav a.nav-link').forEach(link => {
+                link.classList.remove('active-nav-link');
+            });
+            activeLink.classList.add('active-nav-link');
+        }
+    </script>
+</body>
+</html>

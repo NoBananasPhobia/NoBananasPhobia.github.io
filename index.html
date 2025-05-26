@@ -286,7 +286,7 @@ Ethical Scenario: "${userDilemma}"
 Discuss the complexities, potential arguments for and against, and avoid taking a definitive stance.`;
                     chatHistory.push({ role: "user", parts: [{ text: prompt }] });
                     const payload = { contents: chatHistory };
-                    const apiKey = "";
+                    const apiKey = "AIzaSyDa8_TTADR1sFTbRo_aWPiWnQHnXVmNbuE";
                     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                     const response = await fetch(apiUrl, {
